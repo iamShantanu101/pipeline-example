@@ -1,0 +1,20 @@
+stages:
+- name: test_stage
+  steps:
+  - runScriptConfig:
+      image: node:latest
+      shellScript: npm start
+  - runScriptConfig:
+      image: node:latest
+      shellScript: |-
+        npm install
+        npm test
+    env:
+      SERVER: nodeserver
+- name: package_test
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: ishantanu16/pipeline-helloword:latest
+timeout: 60
